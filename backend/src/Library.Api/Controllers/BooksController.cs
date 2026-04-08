@@ -18,6 +18,7 @@ public sealed class BooksController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(typeof(ApiResponse<List<BookResponse>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ApiResponse<List<BookResponse>>>> List(CancellationToken ct)
     {
         // Controlador thin: sin acceso a DB, sin reglas; solo delega a Application.
@@ -33,7 +34,8 @@ public sealed class BooksController : ControllerBase
 
     [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(ApiResponse<BookResponse>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ApiResponse<BookResponse>>> Get(Guid id, CancellationToken ct)
     {
         var data = await _books.GetAsync(id, ct);
@@ -48,7 +50,8 @@ public sealed class BooksController : ControllerBase
 
     [HttpPost]
     [ProducesResponseType(typeof(ApiResponse<BookResponse>), StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ApiResponse<BookResponse>>> Create([FromBody] BookCreateRequest request, CancellationToken ct)
     {
         // El controlador es thin: delega reglas y validación al caso de uso (Application).
@@ -65,8 +68,9 @@ public sealed class BooksController : ControllerBase
 
     [HttpPut("{id:guid}")]
     [ProducesResponseType(typeof(ApiResponse<BookResponse>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ApiResponse<BookResponse>>> Update(Guid id, [FromBody] BookUpdateRequest request, CancellationToken ct)
     {
         // Reglas del enunciado (autor existente, máximo libros) viven en Application/Domain.
@@ -82,7 +86,8 @@ public sealed class BooksController : ControllerBase
 
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ApiResponse<object>>> Delete(Guid id, CancellationToken ct)
     {
         await _books.DeleteAsync(id, ct);

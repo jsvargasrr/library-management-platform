@@ -1,0 +1,18 @@
+# .NET build outputs
+**/bin/
+**/obj/
+
+# user-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Node / Angular
+**/node_modules/
+**/dist/
+.angular/
+
+# OS
+.DS_Store
+

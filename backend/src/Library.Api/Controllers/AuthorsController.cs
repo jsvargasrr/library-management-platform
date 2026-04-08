@@ -18,6 +18,7 @@ public sealed class AuthorsController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(typeof(ApiResponse<List<AuthorResponse>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ApiResponse<List<AuthorResponse>>>> List(CancellationToken ct)
     {
         // Controlador thin: delega todo el comportamiento en Application.
@@ -33,7 +34,8 @@ public sealed class AuthorsController : ControllerBase
 
     [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(ApiResponse<AuthorResponse>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ApiResponse<AuthorResponse>>> Get(Guid id, CancellationToken ct)
     {
         var data = await _authors.GetAsync(id, ct);
@@ -48,8 +50,9 @@ public sealed class AuthorsController : ControllerBase
 
     [HttpPost]
     [ProducesResponseType(typeof(ApiResponse<AuthorResponse>), StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status409Conflict)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ApiResponse<AuthorResponse>>> Create([FromBody] AuthorCreateRequest request, CancellationToken ct)
     {
         // Validación (DTO + negocio) y conflictos (email único) se manejan en Application + middleware global.
@@ -66,9 +69,10 @@ public sealed class AuthorsController : ControllerBase
 
     [HttpPut("{id:guid}")]
     [ProducesResponseType(typeof(ApiResponse<AuthorResponse>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status409Conflict)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ApiResponse<AuthorResponse>>> Update(Guid id, [FromBody] AuthorUpdateRequest request, CancellationToken ct)
     {
         var updated = await _authors.UpdateAsync(id, request, ct);
@@ -83,8 +87,9 @@ public sealed class AuthorsController : ControllerBase
 
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status409Conflict)]
+    [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ApiResponse<object>>> Delete(Guid id, CancellationToken ct)
     {
         // Se impide eliminar autores con libros asociados (integridad referencial + regla de negocio).
