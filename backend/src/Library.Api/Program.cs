@@ -13,8 +13,24 @@ using Library.Infrastructure.Repositories;
 using Library.Infrastructure.SystemClock;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
+using Serilog;
+using Serilog.Enrichers.Span;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Logging estructurado (con Trace/Span IDs cuando existan) para facilitar troubleshooting.
+builder.Host.UseSerilog((ctx, services, cfg) =>
+{
+    cfg
+        .ReadFrom.Configuration(ctx.Configuration)
+        .ReadFrom.Services(services)
+        .Enrich.FromLogContext()
+        .Enrich.WithSpan()
+        .WriteTo.Console();
+});
 
 builder.Services.AddControllers();
 
@@ -52,6 +68,29 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// OpenTelemetry: trazas + métricas (export a consola en Development).
+builder.Services.AddOpenTelemetry()
+    .ConfigureResource(r => r.AddService(serviceName: "Library.Api"))
+    .WithTracing(tracing =>
+    {
+        tracing
+            .AddAspNetCoreInstrumentation()
+            .AddHttpClientInstrumentation();
+
+        if (builder.Environment.IsDevelopment())
+            tracing.AddConsoleExporter();
+    })
+    .WithMetrics(metrics =>
+    {
+        metrics
+            .AddAspNetCoreInstrumentation()
+            .AddHttpClientInstrumentation()
+            .AddRuntimeInstrumentation();
+
+        if (builder.Environment.IsDevelopment())
+            metrics.AddConsoleExporter();
+    });
+
 builder.Services.AddHealthChecks();
 
 builder.Services.AddCors(options =>
@@ -64,6 +103,9 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+// Request logging con Serilog (incluye status code y duración).
+app.UseSerilogRequestLogging();
 
 app.UseCors("default");
 

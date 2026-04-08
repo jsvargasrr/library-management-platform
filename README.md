@@ -24,6 +24,22 @@ dotnet restore backend/Library.sln
 ./scripts/dev-run-frontend.sh
 ```
 
+## Observabilidad (extra)
+
+El backend incluye:
+- **Serilog** (logging estructurado) con `TraceId` y `SpanId` cuando hay trazas activas.
+- **OpenTelemetry** (traces + metrics) con **exporter a consola** en `Development`.
+
+Para verlo en consola:
+
+```bash
+./scripts/dev-run-backend.sh
+```
+
+Luego haz una llamada (por ejemplo abre Swagger y ejecuta un `GET /api/authors`) y verás:
+- logs de request (`UseSerilogRequestLogging`)
+- spans/metrics impresos por el exporter de OpenTelemetry
+
 ## Stack
 
 - **Backend**: .NET (SDK local 9.x; código migrable a .NET 10), ASP.NET Core Web API, EF Core, Swagger
