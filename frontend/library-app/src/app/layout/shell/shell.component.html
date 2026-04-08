@@ -1,0 +1,28 @@
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">LM</div>
+      <div class="title">
+        <div class="name">Library Management</div>
+        <div class="subtitle">Autores & Libros</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a routerLink="/authors" routerLinkActive="active">Autores</a>
+      <a routerLink="/books" routerLinkActive="active">Libros</a>
+    </nav>
+  </header>
+
+  @if (toast(); as t) {
+    <div class="toast" [class.success]="t.kind === 'success'" [class.error]="t.kind === 'error'" [class.info]="t.kind === 'info'">
+      <div class="toast__message">{{ t.message }}</div>
+      <button type="button" class="toast__close" (click)="clearToast()">Cerrar</button>
+    </div>
+  }
+
+  <main class="content">
+    <router-outlet />
+  </main>
+</div>
+

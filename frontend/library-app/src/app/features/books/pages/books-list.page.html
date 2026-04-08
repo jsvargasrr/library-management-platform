@@ -1,0 +1,54 @@
+<section class="page">
+  <div class="header">
+    <div>
+      <h2>Libros</h2>
+      <p class="muted">Gestiona los libros registrados. Total: {{ count() }}</p>
+    </div>
+
+    <div class="actions">
+      <button class="btn secondary" type="button" (click)="refresh()" [disabled]="loading()">Refrescar</button>
+      <a class="btn primary" routerLink="/books/new">Nuevo libro</a>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="card">Cargando…</div>
+  } @else {
+    @if (books().length === 0) {
+      <div class="card">Aún no hay libros. Crea el primero.</div>
+    } @else {
+      <div class="card">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Título</th>
+              <th>Autor</th>
+              <th>Género</th>
+              <th>Año</th>
+              <th>Páginas</th>
+              <th class="right">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (b of books(); track b.id) {
+              <tr>
+                <td>
+                  <a class="link" [routerLink]="['/books', b.id]">{{ b.title }}</a>
+                </td>
+                <td>{{ b.authorName || '—' }}</td>
+                <td>{{ b.genre }}</td>
+                <td>{{ b.year }}</td>
+                <td>{{ b.pages }}</td>
+                <td class="right">
+                  <a class="btn small" [routerLink]="['/books', b.id]">Editar</a>
+                  <button class="btn small danger" type="button" (click)="delete(b)">Eliminar</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  }
+</section>
+

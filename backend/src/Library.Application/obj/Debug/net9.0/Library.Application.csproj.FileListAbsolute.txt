@@ -1,0 +1,15 @@
+/Users/juansebastianvargasrocha/Documents/development/sebas/test/library-management-platform/backend/src/Library.Application/bin/Debug/net9.0/Library.Application.deps.json
+/Users/juansebastianvargasrocha/Documents/development/sebas/test/library-management-platform/backend/src/Library.Application/bin/Debug/net9.0/Library.Application.dll
+/Users/juansebastianvargasrocha/Documents/development/sebas/test/library-management-platform/backend/src/Library.Application/bin/Debug/net9.0/Library.Application.pdb
+/Users/juansebastianvargasrocha/Documents/development/sebas/test/library-management-platform/backend/src/Library.Application/bin/Debug/net9.0/Library.Domain.dll
+/Users/juansebastianvargasrocha/Documents/development/sebas/test/library-management-platform/backend/src/Library.Application/bin/Debug/net9.0/Library.Domain.pdb
+/Users/juansebastianvargasrocha/Documents/development/sebas/test/library-management-platform/backend/src/Library.Application/obj/Debug/net9.0/Library.Application.csproj.AssemblyReference.cache
+/Users/juansebastianvargasrocha/Documents/development/sebas/test/library-management-platform/backend/src/Library.Application/obj/Debug/net9.0/Library.Application.GeneratedMSBuildEditorConfig.editorconfig
+/Users/juansebastianvargasrocha/Documents/development/sebas/test/library-management-platform/backend/src/Library.Application/obj/Debug/net9.0/Library.Application.AssemblyInfoInputs.cache
+/Users/juansebastianvargasrocha/Documents/development/sebas/test/library-management-platform/backend/src/Library.Application/obj/Debug/net9.0/Library.Application.AssemblyInfo.cs
+/Users/juansebastianvargasrocha/Documents/development/sebas/test/library-management-platform/backend/src/Library.Application/obj/Debug/net9.0/Library.Application.csproj.CoreCompileInputs.cache
+/Users/juansebastianvargasrocha/Documents/development/sebas/test/library-management-platform/backend/src/Library.Application/obj/Debug/net9.0/Library..D137A66B.Up2Date
+/Users/juansebastianvargasrocha/Documents/development/sebas/test/library-management-platform/backend/src/Library.Application/obj/Debug/net9.0/Library.Application.dll
+/Users/juansebastianvargasrocha/Documents/development/sebas/test/library-management-platform/backend/src/Library.Application/obj/Debug/net9.0/refint/Library.Application.dll
+/Users/juansebastianvargasrocha/Documents/development/sebas/test/library-management-platform/backend/src/Library.Application/obj/Debug/net9.0/Library.Application.pdb
+/Users/juansebastianvargasrocha/Documents/development/sebas/test/library-management-platform/backend/src/Library.Application/obj/Debug/net9.0/ref/Library.Application.dll

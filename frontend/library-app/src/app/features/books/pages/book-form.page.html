@@ -1,0 +1,56 @@
+<section class="page">
+  <div class="header">
+    <div>
+      <h2>@if (isEdit()) { Editar libro } @else { Nuevo libro }</h2>
+      <p class="muted">Al crear/editar, el autor debe existir y se respeta el máximo permitido de libros.</p>
+    </div>
+    <div class="actions">
+      <a class="btn secondary" routerLink="/books">Volver</a>
+      <button class="btn primary" type="button" (click)="save()" [disabled]="loading()">Guardar</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <form class="form" [formGroup]="form">
+      <label class="span-2">
+        <span>Título *</span>
+        <input type="text" formControlName="title" placeholder="Ej. Cien años de soledad" />
+        @if (form.controls.title.touched && form.controls.title.invalid) {
+          <small class="error">Título requerido (máx 250).</small>
+        }
+      </label>
+
+      <label>
+        <span>Género *</span>
+        <input type="text" formControlName="genre" placeholder="Ej. Novela" />
+        @if (form.controls.genre.touched && form.controls.genre.invalid) {
+          <small class="error">Género requerido (máx 80).</small>
+        }
+      </label>
+
+      <label>
+        <span>Año *</span>
+        <input type="number" formControlName="year" />
+      </label>
+
+      <label>
+        <span>Páginas *</span>
+        <input type="number" formControlName="pages" />
+      </label>
+
+      <label class="span-2">
+        <span>Autor *</span>
+        <select formControlName="authorId">
+          <option value="" disabled>Selecciona un autor…</option>
+          @for (a of authors(); track a.id) {
+            <option [value]="a.id">{{ a.fullName }}</option>
+          }
+        </select>
+        @if (form.controls.authorId.touched && form.controls.authorId.invalid) {
+          <small class="error">Selecciona un autor.</small>
+        }
+      </label>
+    </form>
+  </div>
+</section>
+
